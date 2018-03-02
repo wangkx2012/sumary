@@ -1,1 +1,42 @@
 面向查询的新闻多文档自动摘要算法
+
+├── data
+│   ├── all_sentence_list.plf   句子结构文件
+│   ├── chunyun.plf
+│   ├── ditie_news_con.plf
+│   ├── news_con.plf            抓取结果文件
+│   ├── stopword_new.txt        停用词文件
+│   └── stopword.txt
+├── get_news
+│   ├── chunyun.url             
+│   ├── ditie.url
+│   ├── gm_news.py              抓取新闻内容页
+│   ├── gm.sh                   抓取脚本
+│   ├── gm_url.py               抓取搜索页
+│   └── guangming.url           搜索页url
+├── README
+├── requirement.txt
+├── srv
+│   ├── get_news_time.py        处理句子时间
+│   ├── get_value.py            获取句子权重及相似度
+│   ├── lda_new.py              lda模型
+│   ├── re_conf.py              处理句子文件的正则表达式
+│   ├── util.py
+├── w2v
+│   ├── all                     预训练词向量模型
+│   │   ├── all_embedding_128
+│   │   ├── all_embedding_128.syn1neg.npy
+│   │   └── all_embedding_128.wv.syn0.npy
+│   ├── news
+│   │   ├── word_embedding_128
+│   │   ├── word_embedding_128.syn1neg.npy
+│   │   └── word_embedding_128.wv.syn0.npy
+│   ├── w2v.py
+│   └── wijibake
+│       ├── word_embedding_128
+│       ├── word_embedding_128.syn1neg.npy
+│       └── word_embedding_128.wv.syn0.npy
+└── yuliao                     训练词向量的预料文件
+    ├── all.w2v.txt
+    ├── news.zh.txt
+    └── wiki.zh.word.text
