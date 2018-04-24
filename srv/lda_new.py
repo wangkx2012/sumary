@@ -8,12 +8,33 @@ import json
 import jieba
 import copy
 from datetime import datetime
-import traceback
 import re
 import pickle
 import numpy as np
 import lda
 import lda.datasets
+import docx
+
+def read_docx(file_name):
+    doc = docx.Document(file_name)
+    content = [para.text for para in doc.paragraphs]
+    sentence_tag = u"[。？！]"
+    sentence_list = []
+    for c in content:
+        c = re.split(sentence_tag,c)
+        sentence_list.extend(c)
+    return sentence_list[0],sentence_list[1:]
+
+def make_info(dir_name):
+    news_info=[]
+    path = dir_name #u'D:\办公' #unicode
+    for root, dirs, files in os.walk(path): #该目录下所有文件和文件夹 os.listdir仅当前
+        for ff in files:
+            file_name = os.path.join(root,ff)
+            title,file_content = read_docx(file_name)
+            content={'title':title,'content_text':file_content}
+            news_info.append(content)
+    return news_info
 
 def clean_str(string):
     string = re.sub(ur"[^\u4e00-\u9fff]", "", string)
@@ -100,12 +121,21 @@ def make_lda_data(news_info, LEN_WORD,stopword_dict):
 
 if __name__ == '__main__':
     stopword_dict = stopword('../data/stopword.txt')
-    news_info = read_info('../data/news_con.plf')
-    print len(news_info)
+    #list中存放dict形式，title，content_text为list，为每个句子。
+    ready=False
+    if ready:
+        news_info = read_info('../data/news_con.plf')
+        print len(news_info)
+    else:
+        #读取文件目录下的所有文件
+        news_info = make_info('../')
+        print len(news_info)
+
+    #词袋list
     vocab = make_vob(news_info)
     word_to_num,num_to_word = make_bagofword(vocab)
     LEN_WORD = len(word_to_num)
-
+    #形成标题和文档矩阵
     X, titles = make_lda_data(news_info, LEN_WORD,stopword_dict)
     print len(word_to_num),len(vocab),len(titles)
     

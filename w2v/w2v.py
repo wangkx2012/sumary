@@ -76,7 +76,7 @@ if __name__ == '__main__':
     stopword_dict = stopword('../data/stopword.txt')
     news_info = read_info('../data/news_con.plf')
     model = Word2Vec.load("all/all_embedding_128")
-
+    print len(model.wv.vocab)
     vocab = make_vob(news_info)
     word_to_num,num_to_word = make_bagofword(vocab)
     LEN_WORD = len(word_to_num)

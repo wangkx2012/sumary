@@ -9,7 +9,7 @@ import jieba
 import copy
 from datetime import datetime
 import traceback
-import json
+import math
 import pickle
 import re
 from util import *
@@ -95,7 +95,7 @@ def make_v_weight(sentence_list):
         all_weight += weight_v[j]
     for j in weight_v:
         weight_v[j] =weight_v[j]/all_weight
-    weight_v['query_samilar_value'] = weight_v['query_samilar_value']/2
+    weight_v['query_samilar_value'] = weight_v['query_samilar_value']/3
     weight_v['sent_samilar_value'] = weight_v['sent_samilar_value']*2
     weight_v['pos'] = weight_v['pos']/2
     return weight_v
@@ -129,7 +129,7 @@ if __name__ == '__main__':
         'final_value':0,
         'sentence_id':0
     }
-    query = u'网上购买地铁票'
+    query = u'鸿茅药酒'
 #    time_list = []
 #    for i in open('time.txt','rb'):
 #        time_list.append(i.strip()) 
@@ -146,15 +146,26 @@ if __name__ == '__main__':
         value['tfidf_value'] = get_tdidf_value(sentence['sentence'],sentence['doc_num'])
 
         sentence['value'] = value
-        #print value
-        for k,v in sentence.items():
-            print str(k)+'#'+str(v)
+     #   print value
+        #for k,v in sentence.items():
+        #    print str(k)+'#'+str(v)
 
     weight_v = make_v_weight(sentence_list)
-    print weight_v
+#    print weight_v
+    sort_time = sorted(sentence_list,key = lambda e:e.__getitem__('sentence_time'), reverse=True)
+    num,index =0,0
     for sentence in sentence_list:
         sentence['final_value'] = get_final_value(sentence['value'], weight_v)
-        #print sentence['final_value']
+#        index=sort_time.index(sentence)*1.0/len(sort_time)
+#        a=math.exp(-2.3*index)
+#        sentence['final_value'] =sentence['final_value']*a
+    #    print sentence
     sort_sen = sorted(sentence_list,key = lambda e:e.__getitem__('final_value'), reverse=True)
-    for i in  sort_sen[:10]:
-        print i['final_value'],i['sentence'],i['value']
+    result = sort_sen[:50]
+    sort_sen = sorted(result,key = lambda e:e.__getitem__('sentence_id'), reverse=False)
+    for i in  sort_sen:
+#        print len(i['sentence'])
+        print '%s#%s#%s' % (str(i['final_value']),str(i['sentence']),str(i['value']))
+        print '%s\t%s' % (str(i['doc_num']),str(i['sentence']))
+#    for i in  sort_sen[360:400]:
+#        print i['final_value'],i['sentence']

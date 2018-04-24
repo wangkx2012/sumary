@@ -40,7 +40,7 @@ s = Spider()
 append_list = 10
 page =1
 while append_list != 0:
-    url = 'http://search.gmw.cn/search.do?c=n&cp='+str(page)+'&q=%25E7%2585%25A4%25E6%2594%25B9%25E6%25B0%2594&tt=false&to=true&adv=false'
+    url = 'http://search.gmw.cn/search.do?c=n&cp='+str(page)+'&q=%25E5%258F%2599%25E5%2588%25A9%25E4%25BA%259A%25E6%2588%2598%25E4%25BA%258B&tt=false&to=true&adv=false'
     before_list = len(s.return_url)
     s.getNextUrls(url)
     after_list = len(s.return_url)

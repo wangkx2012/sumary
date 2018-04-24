@@ -160,6 +160,7 @@ if __name__ == '__main__':
                 this_sentence['doc_time'] = doc_time
                 all_sentence_list.append(this_sentence)
     print len(all_sentence_list)
+    print all_sentence_list[-1]['doc_num']
     save_pickle_data(all_sentence_list,'../data/all_sentence_list')
 
 

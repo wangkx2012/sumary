@@ -105,7 +105,7 @@ def save_pickle_data(data, filename):
 all_url = 0
 success_count = 0
 all_info =[]
-for url in open('guangming.url'):
+for url in open('hongmao.url'):
     all_url+=1
     url = url.strip()
     success,info_dict = getNews(url)
@@ -113,6 +113,6 @@ for url in open('guangming.url'):
         all_info.append(info_dict)
         success_count +=1
 print success_count*1.0/all_url
-save_pickle_data(all_info, '../data/news_con')
+save_pickle_data(all_info, '../data/hongmao')
 
 
